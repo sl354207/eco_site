@@ -31,7 +31,7 @@ import '@react-page/plugins-spacer/lib/index.css';
 // The divider plugin
 import divider from '@react-page/plugins-divider';
 
-import PageLayout from '../components/PageLayout';
+import EditorLayout from '../components/EditorLayout';
 
 
 
@@ -49,8 +49,8 @@ export default function SimpleExample() {
   const [value, setValue] = useState<Value>(null);
 
   return (
-    <PageLayout>
+    <EditorLayout>
       <Editor cellPlugins={cellPlugins} value={value} onChange={setValue} />
-    </PageLayout>
+    </EditorLayout>
   );
 }
