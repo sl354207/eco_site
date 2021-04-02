@@ -18,6 +18,16 @@ const getCustomers = async () => {
     return customers;
 };
 
+const createCustomer = async (firstName) => {
+    return await faunaClient.query(
+        q.Create(q.Collection('customers'), {
+            data: { firstName },
+        })
+    );
+};
+
+
 module.exports = {
-    getCustomers
+    getCustomers,
+    createCustomer
 };
