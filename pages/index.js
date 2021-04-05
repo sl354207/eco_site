@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { getCustomers } from '../utils/fauna'
 
-export default function Home() {
+export default function Home({ customers }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -50,6 +51,16 @@ export default function Home() {
         </div>
       </main>
 
+      <div>
+      <ul>
+        {customers.map((customer) => (
+          <li>
+            <h2>{customer.data.firstName}</h2>
+          </li>
+        ))}
+      </ul>
+      </div>
+
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -62,4 +73,27 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export const getStaticProps = async () => {
+  // const res = await fetch(`${server}/api/articles`)
+  // const articles = await res.json()
+
+  // // return articles from data.js
+  // return {
+  //   props: {
+  //     articles
+  //   }
+  // }
+
+  const customers = await getCustomers();
+  console.log(customers)
+
+  return {
+    props: {
+      customers
+    }
+  }
+
+
 }
