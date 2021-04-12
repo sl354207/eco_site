@@ -18,16 +18,26 @@ const getCustomers = async () => {
     return customers;
 };
 
-const createCustomer = async (firstName) => {
+const createCustomer = async (id, version, rows) => {
     return await faunaClient.query(
         q.Create(q.Collection('customers'), {
-            data: { firstName },
+            data: { id, version, rows },
         })
     );
 };
 
+const getCustomer = async () => {
+    const customer = await faunaClient.query(
+        q.Get(q.Ref(q.Collection("customers"), "295675458544992770")));
+    
+    customer.id = customer.ref.id;
+    delete customer.ref;
+    return customer;
+}
+
 
 module.exports = {
     getCustomers,
-    createCustomer
+    createCustomer,
+    getCustomer
 };

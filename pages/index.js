@@ -51,7 +51,7 @@ export default function Home({ customers }) {
         </div>
       </main>
 
-      <div>
+      {/* <div>
       <ul>
         {customers.map((customer) => (
           <li>
@@ -59,7 +59,7 @@ export default function Home({ customers }) {
           </li>
         ))}
       </ul>
-      </div>
+      </div> */}
 
       <footer className={styles.footer}>
         <a
@@ -75,25 +75,18 @@ export default function Home({ customers }) {
   )
 }
 
-export const getStaticProps = async () => {
-  // const res = await fetch(`${server}/api/articles`)
-  // const articles = await res.json()
+// export const getStaticProps = async () => {
+  
+  
 
-  // // return articles from data.js
-  // return {
-  //   props: {
-  //     articles
-  //   }
-  // }
+//   const customers = await getCustomers();
+//   console.log(customers)
 
-  const customers = await getCustomers();
-  console.log(customers)
-
-  return {
-    props: {
-      customers
-    }
-  }
+//   return {
+//     props: {
+//       customers
+//     }
+//   }
 
 
-}
+// }
