@@ -15,7 +15,7 @@ import slate from '@react-page/plugins-slate';
 import '@react-page/plugins-slate/lib/index.css';
 
 // image
-import image from '@react-page/plugins-image';
+import  imagePlugin  from '../plugins/customImage';
 
 // Stylesheets for the image plugin
 import '@react-page/plugins-image/lib/index.css';
@@ -37,13 +37,16 @@ import { Button } from '@material-ui/core';
 
 import { getCustomer } from '../utils/fauna';
 
+import testPlugin from '../plugins/testPlugin'
+
 
 
 
 
 // Define which plugins we want to use.
 const cellPlugins = [slate(),
-  image,
+  imagePlugin,
+  testPlugin,
   video,
   spacer,
   divider
