@@ -79,7 +79,7 @@ export default function SimpleExample({ customer }) {
 export const getStaticProps = async () => {
   
   const customer = await getCustomer();
-  console.log(customer);
+  
 
   return {
     props: {
