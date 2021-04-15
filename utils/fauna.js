@@ -1,5 +1,7 @@
 const faunadb = require('faunadb');
+
 const faunaClient = new faunadb.Client({ secret: process.env.FAUNA_SERVER_KEY });
+
 const q = faunadb.query;
 
 const getCustomers = async () => {
@@ -9,9 +11,12 @@ const getCustomers = async () => {
             q.Lambda('ref', q.Get(q.Var('ref')))
         )
     );
+
     const customers = data.map((customer) => {
         customer.id = customer.ref.id;
+
         delete customer.ref;
+
         return customer;
     });
 
@@ -31,7 +36,9 @@ const getCustomer = async () => {
         q.Get(q.Ref(q.Collection("customers"), "295675458544992770")));
     
     customer.id = customer.ref.id;
+
     delete customer.ref;
+    
     return customer;
 }
 

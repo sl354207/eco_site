@@ -15,7 +15,7 @@ import slate from '@react-page/plugins-slate';
 import '@react-page/plugins-slate/lib/index.css';
 
 // image
-import  imagePlugin  from '../plugins/customImage';
+import image from '@react-page/plugins-image'
 
 // Stylesheets for the image plugin
 import '@react-page/plugins-image/lib/index.css';
@@ -45,7 +45,7 @@ import testPlugin from '../plugins/testPlugin'
 
 // Define which plugins we want to use.
 const cellPlugins = [slate(),
-  imagePlugin,
+  image,
   testPlugin,
   video,
   spacer,
@@ -63,9 +63,6 @@ export default function SimpleExample({ customer }) {
       },
       body: JSON.stringify(value),
     });
-    // const response = await res.json();
-    // console.log(typeof(value));
-    // console.log(response);
   }
 
   return (
