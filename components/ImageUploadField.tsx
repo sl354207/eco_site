@@ -12,7 +12,7 @@ function ImageUploadField({ onChange, value }: ImageProps) {
   //   return url;
   // }
 
-  const uploadFile = async (photo) => {
+  const uploadFile = async (photo, callback) => {
     const url = "https://api.cloudinary.com/v1_1/demo/upload";
     const xhr = new XMLHttpRequest();
     const fd = new FormData();
@@ -37,8 +37,10 @@ function ImageUploadField({ onChange, value }: ImageProps) {
         const response = JSON.parse(xhr.responseText);
         // https://res.cloudinary.com/cloudName/image/upload/v1483481128/public_id.jpg
         const url = response.secure_url;
+
+        callback(url);
         
-         console.log(url);
+        //  console.log(url);
         // Create a thumbnail of the uploaded image, with 150px width
         // const tokens = url.split('/');
         // tokens.splice(-2, 0, 'w_150,c_scale');
@@ -47,7 +49,7 @@ function ImageUploadField({ onChange, value }: ImageProps) {
         // img.alt = response.public_id;
         // document.getElementById('gallery').appendChild(img);
       }
-      console.log(xhr.onreadystatechange);
+      // console.log(xhr.onreadystatechange);
     };
   
     fd.append('upload_preset', 'doc_codepen_example');
@@ -76,8 +78,14 @@ function ImageUploadField({ onChange, value }: ImageProps) {
         id="file-input"
         onChange={async ({ target: { files } }) => {
           if (files && files[0]) {
-            const url = await uploadFile(files[0]);
-            onChange(url);
+            // const url = await uploadFile(files[0], async function(url){
+            //   return url;
+            // });
+            // console.log(url);
+            // onChange(url);
+            await uploadFile(files[0], async function(url){
+              onChange(url);
+            });
             // console.log(files[0].name);
           }
         }}
