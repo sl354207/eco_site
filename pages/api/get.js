@@ -2,10 +2,13 @@
 
 import { getCustomers, getCustomer } from '../../utils/fauna';
 
+// api endpoint to get all customers or a single customer from database
 export default async function handler(req, res) {
+    // only allow get request
     if (req.method !== 'GET') {
         return res.status(405);
     }
+    // try get request, if successful return response, otherwise return error message
     try {
         const customers = await getCustomers();
 

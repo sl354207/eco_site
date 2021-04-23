@@ -52,9 +52,12 @@ const cellPlugins = [slate(),
   divider
 ];
 
+// pass in customer from getStaticProps as prop to set value of editor
 export default function SimpleExample({ customer }) {
+  // set customer data as value of editor
   const [value, setValue] = useState<Value>(customer.data);
 
+  // add value of editor to database from create api endpoint using fetch api(see docs).
   const create = async (value) => {
     const res = await fetch('/api/create', {
       method: 'POST',
@@ -73,6 +76,7 @@ export default function SimpleExample({ customer }) {
   );
 }
 
+// retrieve data at build time
 export const getStaticProps = async () => {
   
   const customer = await getCustomer();
