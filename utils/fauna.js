@@ -26,6 +26,15 @@ const getPosts = async () => {
     return posts;
 };
 
+const getPostById = async (id) => {
+    const post = await faunaClient.query(
+        q.Get(q.Ref(q.Collection('published_posts'), id))
+    );
+    post.id = post.ref.id;
+    delete post.ref;
+    return post;
+};
+
 // add draft to database with specific format from editor with id, version, and rows as input data.
 const createDraft = async (id, version, rows) => {
     return await faunaClient.query(
@@ -50,6 +59,7 @@ const getDraft = async () => {
 
 module.exports = {
     getPosts,
+    getPostById,
     createDraft,
     getDraft
 };

@@ -1,6 +1,6 @@
-import { getPosts } from '../utils/fauna'
+import { getPosts } from '../../utils/fauna'
 // const { getPosts } = require('../utils/mongodb');
-import PostList from '../components/PostList'
+import PostList from '../../components/PostList'
 
 // pass in posts from database as a prop
 export default function Posts({posts}) {
