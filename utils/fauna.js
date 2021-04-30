@@ -4,52 +4,52 @@ const faunaClient = new faunadb.Client({ secret: process.env.FAUNA_SERVER_KEY })
 
 const q = faunadb.query;
 
-// query database to get all customers
-const getCustomers = async () => {
-    // map all customers from collection to data
+// query database to get all posts
+const getPosts = async () => {
+    // map all posts from collection to data
     const { data } = await faunaClient.query(
         q.Map(
-            q.Paginate(q.Documents(q.Collection('customers'))),
+            q.Paginate(q.Documents(q.Collection('published_posts'))),
             q.Lambda('ref', q.Get(q.Var('ref')))
         )
     );
     
-    // map customers so that id is converted to json
-    const customers = data.map((customer) => {
-        customer.id = customer.ref.id;
+    // map posts so that id is converted to json
+    const posts = data.map((post) => {
+        post.id = post.ref.id;
 
-        delete customer.ref;
+        delete post.ref;
 
-        return customer;
+        return post;
     });
 
-    return customers;
+    return posts;
 };
 
-// add customer to database with specific format from editor with id, version, and rows as input data.
-const createCustomer = async (id, version, rows) => {
+// add draft to database with specific format from editor with id, version, and rows as input data.
+const createDraft = async (id, version, rows) => {
     return await faunaClient.query(
-        q.Create(q.Collection('customers'), {
+        q.Create(q.Collection('drafts'), {
             data: { id, version, rows },
         })
     );
 };
 
-// retrieve single customer from database, convert to proper json.
-const getCustomer = async () => {
-    const customer = await faunaClient.query(
-        q.Get(q.Ref(q.Collection("customers"), "295675458544992770")));
+// retrieve single draft from database, convert to proper json.
+const getDraft = async () => {
+    const draft = await faunaClient.query(
+        q.Get(q.Ref(q.Collection("drafts"), "297303467265884676")));
     
-    customer.id = customer.ref.id;
+    draft.id = draft.ref.id;
 
-    delete customer.ref;
+    delete draft.ref;
     
-    return customer;
+    return draft;
 }
 
 
 module.exports = {
-    getCustomers,
-    createCustomer,
-    getCustomer
+    getPosts,
+    createDraft,
+    getDraft
 };

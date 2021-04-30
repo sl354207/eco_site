@@ -1,4 +1,4 @@
-import { createCustomer } from '../../utils/fauna';
+import { createDraft } from '../../utils/fauna';
 
 // api endpoint to post a customer to the database
 export default async function handler(req, res) {
@@ -11,13 +11,13 @@ export default async function handler(req, res) {
     }
     // try post request, if successful return response, otherwise return error message.
     try {
-        const createdCustomer = await createCustomer(
+        const createdDraft = await createDraft(
             id,
             version,
             rows
         );
 
-        return res.status(200).json(createdCustomer);
+        return res.status(200).json(createdDraft);
     } catch (err) {
         console.error(err);
         

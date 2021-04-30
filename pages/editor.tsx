@@ -35,7 +35,7 @@ import EditorLayout from '../components/EditorLayout';
 
 import { Button } from '@material-ui/core';
 
-import { getCustomer } from '../utils/fauna';
+import { getDraft } from '../utils/fauna';
 
 import testPlugin from '../plugins/testPlugin'
 
@@ -53,9 +53,9 @@ const cellPlugins = [slate(),
 ];
 
 // pass in customer from getStaticProps as prop to set value of editor
-export default function SimpleExample({ customer }) {
+export default function SimpleExample({ draft }) {
   // set customer data as value of editor
-  const [value, setValue] = useState<Value>(customer.data);
+  const [value, setValue] = useState<Value>(draft.data);
 
   // add value of editor to database from create api endpoint using fetch api(see docs).
   const create = async (value) => {
@@ -79,12 +79,12 @@ export default function SimpleExample({ customer }) {
 // retrieve data at build time
 export const getStaticProps = async () => {
   
-  const customer = await getCustomer();
+  const draft = await getDraft();
   
 
   return {
     props: {
-      customer
+      draft
     }
   }
 
