@@ -37,7 +37,7 @@ import { Button } from '@material-ui/core';
 
 import { getDraft } from '../utils/fauna';
 
-import testPlugin from '../plugins/testPlugin'
+import customImage from '../plugins/customImage'
 
 
 
@@ -46,7 +46,7 @@ import testPlugin from '../plugins/testPlugin'
 // Define which plugins we want to use.
 const cellPlugins = [slate(),
   image,
-  testPlugin,
+  customImage,
   video,
   spacer,
   divider
