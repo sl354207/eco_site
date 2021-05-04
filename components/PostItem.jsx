@@ -3,7 +3,7 @@ import Link from 'next/link'
 // pass in post as prop from PostList which was created from posts data
 const PostItem = ({post}) => {
     return (
-        <h3>{post.id}</h3>
+        <h3>{post._id}</h3>
         // link to each post by id from data
         // <Link href='/post/[id]' as={`post/${post.id}`}>
         //     {/* add content and styling to PostItem */}

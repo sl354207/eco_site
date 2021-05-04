@@ -35,7 +35,7 @@ import EditorLayout from '../components/EditorLayout';
 
 import { Button } from '@material-ui/core';
 
-import { getDraft } from '../utils/fauna';
+import { getDraftById } from '../utils/fauna';
 
 import customImage from '../plugins/customImage'
 
@@ -56,22 +56,29 @@ const cellPlugins = [slate(),
 export default function SimpleExample({ draft }) {
   // set customer data as value of editor
   const [value, setValue] = useState<Value>(draft.data);
-
+  // console.log(draft);
+  // console.log(draft._id);
+  console.log(value);
   // add value of editor to database from create api endpoint using fetch api(see docs).
-  const create = async (value) => {
-    const res = await fetch('/api/create', {
-      method: 'POST',
+  const _id = draft._id;
+  const create = async (value, _id) => {
+    
+    console.log(_id);
+    console.log(value);
+    const res = await fetch('/api/deleteDraft', {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(value),
+      body: JSON.stringify(_id),
     });
+    console.log(res);
   }
 
   return (
     <EditorLayout>
       <Editor cellPlugins={cellPlugins} value={value} onChange={setValue} />
-      <Button onClick={()=>create(value)}>test</Button>
+      <Button onClick={()=>create(value, _id)}>test</Button>
     </EditorLayout>
   );
 }
@@ -79,7 +86,7 @@ export default function SimpleExample({ draft }) {
 // retrieve data at build time
 export const getStaticProps = async () => {
   
-  const draft = await getDraft();
+  const draft = await getDraftById("297303467265884676");
   
 
   return {

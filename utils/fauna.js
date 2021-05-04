@@ -4,6 +4,15 @@ const faunaClient = new faunadb.Client({ secret: process.env.FAUNA_SERVER_KEY })
 
 const q = faunadb.query;
 
+// add a post to database with specific format from editor with id, version, and rows as input data.
+const createPost = async (id, version, rows) => {
+    return await faunaClient.query(
+        q.Create(q.Collection('published_posts'), {
+            data: { id, version, rows },
+        })
+    );
+};
+
 // query database to get all posts
 const getPosts = async () => {
     // map all posts from collection to data
@@ -14,9 +23,9 @@ const getPosts = async () => {
         )
     );
     
-    // map posts so that id is converted to json
+    // map posts so that id is converted to json. Name _id to not confuse with editor data id.
     const posts = data.map((post) => {
-        post.id = post.ref.id;
+        post._id = post.ref.id;
 
         delete post.ref;
 
@@ -26,13 +35,33 @@ const getPosts = async () => {
     return posts;
 };
 
-const getPostById = async (id) => {
+// retrieve single post by id from database. Named _id to not confuse with editor id value.
+const getPostById = async (_id) => {
     const post = await faunaClient.query(
-        q.Get(q.Ref(q.Collection('published_posts'), id))
+        q.Get(q.Ref(q.Collection('published_posts'), _id))
     );
-    post.id = post.ref.id;
+    post._id = post.ref.id;
     delete post.ref;
     return post;
+};
+
+// query database to get all posts by user
+
+// update a post
+const updatePost = async (_id, id, version, rows ) => {
+    return await faunaClient.query(
+        q.Update(
+          q.Ref(q.Collection('published_posts'), _id),
+          { data: { id, version, rows } },
+        )
+      );
+};
+
+//delete a post
+const deletePost = async (_id) => {
+    return await faunaClient.query(
+        q.Delete(q.Ref(q.Collection('published_posts'), _id))
+    );
 };
 
 // add draft to database with specific format from editor with id, version, and rows as input data.
@@ -44,12 +73,14 @@ const createDraft = async (id, version, rows) => {
     );
 };
 
+// query database to get all drafts by user 
+
 // retrieve single draft from database, convert to proper json.
-const getDraft = async () => {
+const getDraftById = async (_id) => {
     const draft = await faunaClient.query(
-        q.Get(q.Ref(q.Collection("drafts"), "297303467265884676")));
+        q.Get(q.Ref(q.Collection("drafts"), _id)));
     
-    draft.id = draft.ref.id;
+    draft._id = draft.ref.id;
 
     delete draft.ref;
     
@@ -57,9 +88,35 @@ const getDraft = async () => {
 }
 
 
+
+// update a draft
+const updateDraft = async (_id, id, version, rows ) => {
+    return await faunaClient.query(
+        q.Update(
+          q.Ref(q.Collection('drafts'), _id),
+          { data: { id, version, rows } },
+        )
+      );
+};
+
+//delete a draft
+const deleteDraft = async (_id) => {
+    return await faunaClient.query(
+        q.Delete(q.Ref(q.Collection('drafts'), _id))
+    );
+};
+
+
 module.exports = {
+    createPost,
     getPosts,
+    // getPostsByUser,
     getPostById,
+    updatePost,
+    deletePost,
     createDraft,
-    getDraft
+    // getDraftsByUser,
+    getDraftById,
+    updateDraft,
+    deleteDraft
 };
