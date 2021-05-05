@@ -48,7 +48,7 @@ const getPostById = async (_id) => {
 // query database to get all posts by user
 
 // update a post
-const updatePost = async (_id, id, version, rows ) => {
+const updatePost = async ( id, version, rows, _id ) => {
     return await faunaClient.query(
         q.Update(
           q.Ref(q.Collection('published_posts'), _id),
@@ -90,13 +90,19 @@ const getDraftById = async (_id) => {
 
 
 // update a draft
-const updateDraft = async (_id, id, version, rows ) => {
-    return await faunaClient.query(
+const updateDraft = async ( id, version, rows, _id ) => {
+    const updated = await faunaClient.query(
         q.Update(
           q.Ref(q.Collection('drafts'), _id),
           { data: { id, version, rows } },
         )
       );
+
+      updated._id = updated.ref.id;
+
+      delete updated.ref;
+
+      return updated;
 };
 
 //delete a draft

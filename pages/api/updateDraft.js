@@ -5,16 +5,18 @@ export default async function handler(req, res) {
         return res.status(405).json({ msg: 'Method not allowed' });
     }
 
+    
+
     // body must be in same format as database query
-    const { _id, id, version, rows } = req.body;
+    const { id, version, rows, _id } = req.body;
     // console.log(req.body)
 
     try {
         const updated = await updateDraft(
-            _id,
             id,
             version,
-            rows
+            rows,
+            _id
         );
         return res.status(200).json(updated);
     } catch (err) {

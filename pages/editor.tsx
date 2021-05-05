@@ -61,16 +61,28 @@ export default function SimpleExample({ draft }) {
   console.log(value);
   // add value of editor to database from create api endpoint using fetch api(see docs).
   const _id = draft._id;
-  const create = async (value, _id) => {
-    
-    console.log(_id);
-    console.log(value);
-    const res = await fetch('/api/deleteDraft', {
-      method: 'DELETE',
+  const create = async (value) => {
+    const res = await fetch('/api/createDraft', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(_id),
+      body: JSON.stringify(value),
+    });
+  }
+
+  const update = async (value, _id) => {
+    
+    console.log(_id);
+    console.log(value);
+    value = Object.assign(value, {_id: _id});
+    console.log(value);
+    const res = await fetch('/api/updateDraft', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(value),
     });
     console.log(res);
   }
@@ -78,7 +90,8 @@ export default function SimpleExample({ draft }) {
   return (
     <EditorLayout>
       <Editor cellPlugins={cellPlugins} value={value} onChange={setValue} />
-      <Button onClick={()=>create(value, _id)}>test</Button>
+      <Button onClick={()=>create(value)}>Create Draft</Button>
+      <Button onClick={()=>update(value, _id)}>Save Draft</Button>
     </EditorLayout>
   );
 }
