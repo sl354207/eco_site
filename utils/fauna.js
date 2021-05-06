@@ -47,6 +47,28 @@ const getPostById = async (_id) => {
 
 // query database to get all posts by user
 
+// UPDATE TO GETPOSTSBYUSER
+const getPostsByUser = async () => {
+    // map all posts from collection to data
+    const { data } = await faunaClient.query(
+        q.Map(
+            q.Paginate(q.Documents(q.Collection('published_posts'))),
+            q.Lambda('ref', q.Get(q.Var('ref')))
+        )
+    );
+    
+    // map posts so that id is converted to json. Name _id to not confuse with editor data id.
+    const posts = data.map((post) => {
+        post._id = post.ref.id;
+
+        delete post.ref;
+
+        return post;
+    });
+
+    return posts;
+};
+
 // update a post
 const updatePost = async ( id, version, rows, _id ) => {
     return await faunaClient.query(
@@ -73,7 +95,29 @@ const createDraft = async (id, version, rows) => {
     );
 };
 
-// query database to get all drafts by user 
+// query database to get all drafts by user
+
+// UPDATE TO GETDRAFTSBYUSER
+const getDraftsByUser = async () => {
+    // map all posts from collection to data
+    const { data } = await faunaClient.query(
+        q.Map(
+            q.Paginate(q.Documents(q.Collection('drafts'))),
+            q.Lambda('ref', q.Get(q.Var('ref')))
+        )
+    );
+    
+    // map posts so that id is converted to json. Name _id to not confuse with editor data id.
+    const drafts = data.map((draft) => {
+        draft._id = draft.ref.id;
+
+        delete draft.ref;
+
+        return draft;
+    });
+
+    return drafts;
+};
 
 // retrieve single draft from database, convert to proper json.
 const getDraftById = async (_id) => {
@@ -116,12 +160,12 @@ const deleteDraft = async (_id) => {
 module.exports = {
     createPost,
     getPosts,
-    // getPostsByUser,
+    getPostsByUser,
     getPostById,
     updatePost,
     deletePost,
     createDraft,
-    // getDraftsByUser,
+    getDraftsByUser,
     getDraftById,
     updateDraft,
     deleteDraft
