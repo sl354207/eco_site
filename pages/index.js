@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import { getCustomers } from '../utils/fauna'
 
 export default function Home({ customers }) {
+  
   return (
     <div className={styles.container}>
       <Head>

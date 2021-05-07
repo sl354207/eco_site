@@ -8,7 +8,7 @@ export default function DraftsByUser() {
     // retrieve posts from posts api. convert swr data to name posts.
 
     // UPDATE TO GETDRAFTSBYUSER
-    const { data: drafts} = useSWR('/api/getDraftsByUser')
+    const { data: drafts} = useSWR('/api/getdrafts')
     // console.log(posts);
 
     if (!drafts) return "Loading...";

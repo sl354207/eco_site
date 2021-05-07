@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { getDraftsByUser } from '../../utils/fauna';
+import { getDraftsByUser } from '../../../utils/fauna';
 
 // api endpoint to get all drafts by user from database
 export default async function handler(req, res) {
@@ -18,4 +18,6 @@ export default async function handler(req, res) {
         
         res.status(500).json({ msg: 'Something went wrong.' });
     }
+    // res.statusCode = 200
+    // res.json({name: 'jon doe'});
 }
