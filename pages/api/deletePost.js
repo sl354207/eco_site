@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
     console.log(req.body);
     console.log(req.body._id);
-    const { _id } = req.body;
+    const  _id  = req.body;
     console.log(_id);
     try {
         const deleted = await deletePost(_id);

@@ -3,14 +3,14 @@ import { useRouter } from 'next/router'
 
 import { Button } from '@material-ui/core'; 
 // pass in post as prop from PostList which was created from posts data
-const PostItem = ({post}) => {
+const DashboardPost = ({post}) => {
     const router = useRouter();
 
     const _id = post._id;
     console.log(_id);
     console.log(typeof _id)
-    const deleteDraft = async (_id) => {
-        const res = await fetch('/api/deleteDraft', {
+    const deletePost = async (_id) => {
+        const res = await fetch('/api/deletePost', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -24,8 +24,8 @@ const PostItem = ({post}) => {
         <div>
             <h3>{post._id}</h3>
             
-            <Button onClick={()=>router.push(`/dashboard/drafts/${post._id}`)}>Edit</Button>
-            <Button onClick={()=>deleteDraft(_id)}>Delete</Button>
+            <Button onClick={()=>router.push(`/dashboard/posts/${post._id}`)}>Edit</Button>
+            <Button onClick={()=>deletePost(_id)}>Delete</Button>
         </div>
         
 
@@ -41,4 +41,4 @@ const PostItem = ({post}) => {
     )
 }
 
-export default PostItem
+export default DashboardPost

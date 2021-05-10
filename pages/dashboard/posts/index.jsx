@@ -1,7 +1,7 @@
 import  useSWR  from 'swr'
 
 
-import  PostList  from '../../../components/PostList'
+import  DashboardPosts  from '../../../components/DashboardPosts'
 
 // pass in posts from database as a prop
 export default function PostsByUser() {
@@ -16,7 +16,7 @@ export default function PostsByUser() {
     return (
         <div>
         {/* pass in posts data as a prop */}
-        <PostList posts={posts}/>
+        <DashboardPosts posts={posts}/>
         </div>
     )
 }

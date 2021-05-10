@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { Button } from '@material-ui/core'; 
 // pass in post as prop from PostList which was created from posts data
-const PostItem = ({post}) => {
+const DashboardDraft = ({post}) => {
     const router = useRouter();
 
     const _id = post._id;
@@ -41,4 +41,4 @@ const PostItem = ({post}) => {
     )
 }
 
-export default PostItem
+export default DashboardDraft
