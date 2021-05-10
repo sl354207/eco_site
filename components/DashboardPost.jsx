@@ -2,13 +2,13 @@
 import { useRouter } from 'next/router'
 
 import { Button } from '@material-ui/core'; 
-// pass in post as prop from PostList which was created from posts data
+// pass in post as prop from DashboardPosts which was created from posts data
 const DashboardPost = ({post}) => {
     const router = useRouter();
 
     const _id = post._id;
-    console.log(_id);
-    console.log(typeof _id)
+    
+    // function to delete post by id
     const deletePost = async (_id) => {
         const res = await fetch('/api/deletePost', {
         method: 'DELETE',
@@ -17,6 +17,8 @@ const DashboardPost = ({post}) => {
         },
         body: JSON.stringify(_id),
         });
+
+        // reload page after deletion
         router.reload();
     }
 
@@ -24,6 +26,7 @@ const DashboardPost = ({post}) => {
         <div>
             <h3>{post._id}</h3>
             
+            {/* push to post url based on id */}
             <Button onClick={()=>router.push(`/dashboard/posts/${post._id}`)}>Edit</Button>
             <Button onClick={()=>deletePost(_id)}>Delete</Button>
         </div>

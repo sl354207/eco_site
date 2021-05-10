@@ -5,11 +5,10 @@ export default async function handler(req, res) {
         return res.status(405).json({ msg: 'Method not allowed' });
     }
 
-    console.log(req.body);
-    console.log(typeof req.body);
+    // set id based on request body
     const  _id  = req.body;
-    console.log(_id);
-    console.log(typeof _id);
+    
+    // try delete request, if successful return response, otherwise return error message
     try {
         const deleted = await deleteDraft(_id);
         return res.status(200).json(deleted);

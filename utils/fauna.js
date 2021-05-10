@@ -26,7 +26,6 @@ const getPosts = async () => {
     // map posts so that id is converted to json. Name _id to not confuse with editor data id.
     const posts = data.map((post) => {
         post._id = post.ref.id;
-
         delete post.ref;
 
         return post;
@@ -40,8 +39,11 @@ const getPostById = async (_id) => {
     const post = await faunaClient.query(
         q.Get(q.Ref(q.Collection('published_posts'), _id))
     );
+
+    // convert to json
     post._id = post.ref.id;
     delete post.ref;
+
     return post;
 };
 
@@ -60,7 +62,6 @@ const getPostsByUser = async () => {
     // map posts so that id is converted to json. Name _id to not confuse with editor data id.
     const posts = data.map((post) => {
         post._id = post.ref.id;
-
         delete post.ref;
 
         return post;
@@ -110,7 +111,6 @@ const getDraftsByUser = async () => {
     // map posts so that id is converted to json. Name _id to not confuse with editor data id.
     const drafts = data.map((draft) => {
         draft._id = draft.ref.id;
-
         delete draft.ref;
 
         return draft;
@@ -125,7 +125,6 @@ const getDraftById = async (_id) => {
         q.Get(q.Ref(q.Collection("drafts"), _id)));
     
     draft._id = draft.ref.id;
-
     delete draft.ref;
     
     return draft;
@@ -142,11 +141,10 @@ const updateDraft = async ( id, version, rows, _id ) => {
         )
       );
 
-      updated._id = updated.ref.id;
+    updated._id = updated.ref.id;
+    delete updated.ref;
 
-      delete updated.ref;
-
-      return updated;
+    return updated;
 };
 
 //delete a draft

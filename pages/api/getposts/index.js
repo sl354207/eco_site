@@ -1,8 +1,6 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import { getPostsByUser } from '../../../utils/fauna';
 
-// api endpoint to get all drafts by user from database
+// api endpoint to get all posts by user from database
 export default async function handler(req, res) {
     // only allow get request
     if (req.method !== 'GET') {
@@ -18,6 +16,4 @@ export default async function handler(req, res) {
         
         res.status(500).json({ msg: 'Something went wrong.' });
     }
-    // res.statusCode = 200
-    // res.json({name: 'jon doe'});
 }

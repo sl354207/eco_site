@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import { getPosts } from '../../utils/fauna';
 
 // api endpoint to get all posts from database
@@ -8,6 +6,7 @@ export default async function handler(req, res) {
     if (req.method !== 'GET') {
         return res.status(405);
     }
+    
     // try get request, if successful return response, otherwise return error message
     try {
         const posts = await getPosts();

@@ -1,6 +1,5 @@
 import  useSWR  from 'swr'
 
-
 import  DashboardDrafts  from '../../../components/DashboardDrafts'
 
 // pass in posts from database as a prop
@@ -9,8 +8,8 @@ export default function DraftsByUser() {
 
     // UPDATE TO GETDRAFTSBYUSER
     const { data: drafts} = useSWR('/api/getdrafts')
-    // console.log(posts);
-
+    
+    // show loading state until drafts are retrieved
     if (!drafts) return "Loading...";
 
     return (

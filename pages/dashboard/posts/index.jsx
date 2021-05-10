@@ -1,6 +1,5 @@
 import  useSWR  from 'swr'
 
-
 import  DashboardPosts  from '../../../components/DashboardPosts'
 
 // pass in posts from database as a prop
@@ -9,8 +8,8 @@ export default function PostsByUser() {
 
     // UPDATE TO GETPOSTSBYUSER
     const { data: posts} = useSWR('/api/getPostsByUser')
-    // console.log(posts);
-
+    
+    // set loading state until posts data is retrieved
     if (!posts) return "Loading...";
 
     return (
